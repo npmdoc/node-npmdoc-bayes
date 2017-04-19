@@ -1,0 +1,281 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://github.com/ttezel/bayes">bayes (v0.0.6)</a>
+</h1>
+<h4>Naive Bayes Classifier for node.js</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.bayes">module bayes</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.bayes.bayes">
+            function <span class="apidocSignatureSpan"></span>bayes
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.bayes.fromJson">
+            function <span class="apidocSignatureSpan">bayes.</span>fromJson
+            <span class="apidocSignatureSpan">(jsonStr)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.bayes.naive_bayes">
+            function <span class="apidocSignatureSpan">bayes.</span>naive_bayes
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">bayes.</span>STATE_KEYS</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.bayes.naive_bayes">module bayes.naive_bayes</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.bayes.naive_bayes.naive_bayes">
+            function <span class="apidocSignatureSpan">bayes.</span>naive_bayes
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.bayes.naive_bayes.fromJson">
+            function <span class="apidocSignatureSpan">bayes.naive_bayes.</span>fromJson
+            <span class="apidocSignatureSpan">(jsonStr)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">bayes.naive_bayes.</span>STATE_KEYS</span>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.bayes" id="apidoc.module.bayes">module bayes</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.bayes.bayes" id="apidoc.element.bayes.bayes">
+        function <span class="apidocSignatureSpan"></span>bayes
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">bayes = function (options) {
+  return new Naivebayes(options)
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.bayes.fromJson" id="apidoc.element.bayes.fromJson">
+        function <span class="apidocSignatureSpan">bayes.</span>fromJson
+        <span class="apidocSignatureSpan">(jsonStr)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">fromJson = function (jsonStr) {
+  var parsed;
+  try {
+    parsed = JSON.parse(jsonStr)
+  } catch (e) {
+    throw new Error('Naivebayes.fromJson expects a valid JSON string.')
+  }
+  // init a new classifier
+  var classifier = new Naivebayes(parsed.options)
+
+  // override the classifier's state
+  STATE_KEYS.forEach(function (k) {
+    if (!parsed[k]) {
+      throw new Error('Naivebayes.fromJson: JSON string is missing an expected property: `'+k+'`.')
+    }
+    classifier[k] = parsed[k]
+  })
+
+  return classifier
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+classifier.categorize('awesome, cool, amazing!! Yay.')
+// =&gt; 'positive'
+
+// serialize the classifier's state as a JSON string.
+var stateJson = classifier.toJson()
+
+// load the classifier back from its JSON representation.
+var revivedClassifier = bayes.<span class="apidocCodeKeywordSpan">fromJson</span>(stateJson)
+
+```
+
+##API
+
+###`var classifier = bayes([options])`
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.bayes.naive_bayes" id="apidoc.element.bayes.naive_bayes">
+        function <span class="apidocSignatureSpan">bayes.</span>naive_bayes
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">naive_bayes = function (options) {
+  return new Naivebayes(options)
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.bayes.naive_bayes" id="apidoc.module.bayes.naive_bayes">module bayes.naive_bayes</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.bayes.naive_bayes.naive_bayes" id="apidoc.element.bayes.naive_bayes.naive_bayes">
+        function <span class="apidocSignatureSpan">bayes.</span>naive_bayes
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">naive_bayes = function (options) {
+  return new Naivebayes(options)
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.bayes.naive_bayes.fromJson" id="apidoc.element.bayes.naive_bayes.fromJson">
+        function <span class="apidocSignatureSpan">bayes.naive_bayes.</span>fromJson
+        <span class="apidocSignatureSpan">(jsonStr)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">fromJson = function (jsonStr) {
+  var parsed;
+  try {
+    parsed = JSON.parse(jsonStr)
+  } catch (e) {
+    throw new Error('Naivebayes.fromJson expects a valid JSON string.')
+  }
+  // init a new classifier
+  var classifier = new Naivebayes(parsed.options)
+
+  // override the classifier's state
+  STATE_KEYS.forEach(function (k) {
+    if (!parsed[k]) {
+      throw new Error('Naivebayes.fromJson: JSON string is missing an expected property: `'+k+'`.')
+    }
+    classifier[k] = parsed[k]
+  })
+
+  return classifier
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+classifier.categorize('awesome, cool, amazing!! Yay.')
+// =&gt; 'positive'
+
+// serialize the classifier's state as a JSON string.
+var stateJson = classifier.toJson()
+
+// load the classifier back from its JSON representation.
+var revivedClassifier = bayes.<span class="apidocCodeKeywordSpan">fromJson</span>(stateJson)
+
+```
+
+##API
+
+###`var classifier = bayes([options])`
+...</pre></li>
+    </ul>
+
+
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
